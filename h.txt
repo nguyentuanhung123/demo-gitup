@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 từng là h nhưng là h local nhe
+=======
+đây là file h
+>>>>>>> 606f1c91d8189da46bac2e59e846c823459cd660
