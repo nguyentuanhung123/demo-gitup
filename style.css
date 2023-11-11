@@ -1,5 +1,9 @@
 .text {
+<<<<<<< HEAD
     color: green;
+=======
+    color: yellow;
+>>>>>>> 9e2fe542b970504bd628b8b805cbcf79158c4372
     height: 20px;
     line-height: 1;
 }
