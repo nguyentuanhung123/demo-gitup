@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 từng là h nhưng là h local nhé !!!
 đây là file h
+=======
+đây là h sửa lần 2 nhé . OK không ?
+>>>>>>> c2cd437d62866cd329fde526597375388f5f1d73
