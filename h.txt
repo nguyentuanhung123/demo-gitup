@@ -1,6 +1,1 @@
-<<<<<<< HEAD
-từng là h nhưng là h local nhe
-đây là file h
-=======
 đây là file h cua tk Thang nhé
->>>>>>> thang
