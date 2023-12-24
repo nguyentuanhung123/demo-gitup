@@ -1,0 +1,138 @@
+Bài học rút ra ở bài 3:
+phải cho git biết chúng ta là ai
+muốn chỉnh cả tk git cho toàn máy tính thì là global
+muốn chỉnh git cho mỗi dự án đó thì là local
+
+Bài học rút ra ở bài 4:
+khi ta bấm git status nó sẽ cho ta biết ta đang ở branch nào và những thay đổi so với ban đầu trong dự án
+khi ta bấm git add . thì code sẽ được đẩy lên khu vực stagging
+nếu muốn quay lại khi vực làm việc khi đang ở khu vực stagging ta sử dụng câu lệnh git reset .
+khi đang ở khu vực stagging thì ta gõ git commit -m ... để chuyển lên khu vực commit (vẫn ở local)
+khi ta muốn quay lại khu vực stagging thì bấm tiện ích graph ở bên trái màn hình  vào commit bấm vào dấu mũi tên quay lại ở commit trước đó bạn đã tạo
+
+
+Bài học rút ra ở bài 39:
+ -Show thông tin các commit : git log
+ -Show các commit ngắn gọnn : git log --oneline
+
+Bài học rút ra ở bài 44:
+-Tạo branch mới trên local 'git branch tenNhanhMoi'.
+-Tạo branch mới trên local và chuyển luôn sang branch đó 'git checkout -b tenNhanhMoi'.
+-List tất cả branch cả trên local và remote 'git branch -a'.
+-Đổi tên branch 'git branch -m tenNhanhCu tenNhanhMoi'.
+-Chuyển branch 'git checkout tenNhanh'.
+-Push một branch ở local lên remote 'git push -u origin localBranch'
+-Xoá branch ở local 'git branch -D localBranchName'
+-Xoá branch ở remote 'git push origin --delete remoteBranchName'
+-Cập nhật lại các branch còn lại sau khi đã xoá ở remote: 'git fetch -p'
+-Nếu tạo các branch mới trên remote thì ta phải 'git fetch' để lấy các branch đó về local
+(nếu không thì khi ta gõ 'git branch -a' thì sẽ chỉ hiển thị các branch cũ nếu ta muốn nó hiện ở danh sách local thì ta phải code ở đâu đó rồi push lên remote hoặc git chechout tên nhánh là sẽ hiện lên ở danh sách local trong máy tính)
+
+Bài học rút ra ở bài 45:
+- Khi ta push code ở lần đầu ở nhánh  mới từ local thì ta phải gõ rất dài (--set-upstrem) nhưng từ lần sau ta sẽ chỉ cần git push để push từ local lên remote
+- để kiểm tra đã kết nối local với remote chưa ta sử dụng câu lệnh 'cat .git/config'
+
+Bài học rút ra ở bài 47: (Sửa lỗi khi ta merge nhầm)
+- Khi ta merge nhầm nhánh của ta vào nhánh main thì ta phải reset lại khi chưa có chuyện gì xảy ra bằng cách
+B1 : git reset --hard <tên mã> (Sử dụng mã ở nhánh main mà ta chưa merge nhầm)
+B2 : git push -f (Thế hiện những cái ở local là chính xác và git phải thực hiện theo cái này)
+
+Bài học rút ra ở bài 50 (Hoàn tác những file ở local changes về trạng thái ban đầu)
+* Nếu ta đổi dữ liệu ở 1 file nào đó mà muốn sửa lại như lúc ban đầu (Ví dụ ta sửa ở file style.css)
+C1 : git checkout style.css
+C2 : git restore style.css
+
+Bài học rút ra ở bài 53 (Hoàn tác commit bằng git reset)
+* Nếu ta sử dụng các câu lệnh ở bài 47 nó sẽ làm mất những code và  mà ta đang làm dở những thứ mà ta đã pull về để đưa về trạng thái ban đầu
+=> Rất nguy hiểm 
+Ví dụ: Ta chỉnh sửa ở remote origin file f.txt thì khi ta pull về sẽ có commit của file f.txt và sau khi pull về ta sửa đổi file e.txt không liên quan đến f.txt.
+Khi ta sử dụng câu lệnh bài 47 thì cả những thứ ta pull về và những thứ ta đã thay đổi sẽ bị mất hết 
+=> Sử dụng phương pháp an toàn hơn (chỉ làm mất những cái cần thiết)
+B1 : git reset <tên_mã> --merge (ở Graph nó sẽ đẩy ta về trạng thái code mà ta lấy tên_mã - tức là chưa merge nhưng sơ đồ merge ở Graph vẫn còn )
+B2 : git push -f (Những thứ mới mà ta đã thay đổi sau khi thực hiện ở 2 câu lệnh này vẫn ở local chưa có ở remote , còn những cái cũ mà ta muốn reset đã trở lại như ban đầu cả ở remote và local - ở Graph sơ đồ merge mà ta thực hiện đã mất và trở lại tình trạng chưa merge như ở trên)
+=> Ta phải git add . -> git commit -> git push những cái ta vừa làm (nếu muốn)
+
+*Bonus : Giải quyết conflict
+Khi ta merge nhánh thường xảy ra hiện tượng conflict => Nó sẽ đưa ra các option là 'Update current' , 'Update incoming changes' ...
+B1 : Ta chọn 1 trong những option đó sau khi đã thảo luận xong bằng cách click vào một những lựa chọn đc hiện thị 
+B2 : Chọn xong ta phải  CTRL + S => git add . => git commit -m "..." => git push (Thế là xong) => Ở graph cũng đã tự động hợp lại
+
+Bài học rút ra ở bài 54 (Hoàn tác commit bằng git revert)
+1. Chạy git status và chắc rằng working tree của bạn clean
+2. Mỗi commit có một mã hash, tìm mã hash đó
+3. Khi bạn tìm thấy mã hash rồi thì chạy câu lệnh dưới (thay thế 2f5451f bằng mã hash của bạn)
+* Các bước thực hiện (Đối với những commit chỉ có một parent):
+B1 : Giả sử ở nhánh  <quoc> ta thực hiện lần lượt 2 commit "add i.txt" (4e78f1 - dưới) rồi đến "add j.txt"  (bcd3fa - trên)
+=> Ta không muốn add file j.txt nữa nên ta chọn mã của nó : bcd3fa
+B2 : khi ta bấm git revert bcd3fa --no-edit (Nó sẽ tạo 1 mã hash mới nhất ở Graph có tên là Revert "add j.txt" và commit "add j.txt" vẫn còn trên Graph nhưng nó đã xoá những thay đổi mà ta đã thực hiện khi thực hiện commit  "add j.txt" -> tức là file j.txt đã bị xoá ở local nhưng nó vẫn còn ở remote origin)
+B3 : Sử dụng git push để lưu những thay đổi đó trên remote origin (nó đã xoá file j.txt ở remote . Không cần dùng git push -f vì ta chỉ đơn giản là đang tạo thêm 1 commit , tức là commit "add j.txt" vẫn còn trên graph và cái mới nhất là Revert "add j.txt")
+
+=> Kết luận ta muốn về lại commit nào thì ta phải chọn đúng mã commit của nó và thực hiện : git revert <tên_mã> --no-edit sau khi thực hiện xong ta git push để lưu thay đổi trên remote
+
+* Vấn đề khi sử dụng với nhánh đã lỡ merge với nhau
+Giả sử ta đã merge nhánh <quoc> vào nhánh main thì ở Graph sẽ có commit mới nhất sau khi đã merge là 060ae5a (ta đang ở nhánh main)
+B1 : Nhánh đã merge sẽ có 2 parent (tức là sẽ có 2 commit ở dưới - cái parent đầu tiên sẽ cùng nhánh với cái đang merge - nhánh main)
+B2 : Muốn sử dụng parent nào thì ta phải dùng : git revert -m <thứ_tự_của_parent> 060ae5a --no-edit (ví dụ : git revert -m 1 060ae5a --no-edit)
+     => Nó sẽ tạo 1 commit mới : Revert <Merge branch quoc> (Không có trên remote mới có ở local)
+B3 : git push để lưu những thay đổi này trên remote (Đã có trên remote)
+
+Bài học rút ra ở bài 56 (Gộp commit với squash)
++ Giả sử xếp yêu cầu ta thực hiện màn hình  và chức năng của register thì cứ mỗi lần ta làm xong một ý nào đó ta đều git commit và cuối cùng là git push cho nó => Điều này sẽ tạo ra nhiều commit rác cho người đọc => Ta phải ghép chúng vào làm một để người xem có thể hiểu được ngay ta đang làm gì
++ Sếp đã tạo branch ở remote cho chúng ta : featureDev/Register => Ta phải sử dụng cấu lệnh : git fetch để lấy nó về cho local
+Sau khi thực hiện những thay đổi ta git push nó lên trên git => Lúc này nó đang có button là Compare & pull request ta thường thấy => Bấm Compare & pull request => Bấm Create pull request (để gửi yêu cầu cho người quản lý main để merge vào và giúp ta xem những commit đã làm) => Quá nhiều commit hiện ra và ta thấy rất khó chịu
+=> Ta phải xử lý vấn đề này
+B1 : Ta dùng : git log --oneline để xem những commit mà ta đã làm ở nhánh mà ta được giao
+B2 : Giả sử ta đã làm 3 commit thì ta gõ : git rebase -i HEAD~3 (nếu không muốn nữa ta git rebase --quit)
+B3 : Màn  hình Terminal đc hiển thị => Gõ 'i' để insert => sửa 2 cái 'pick' cuối thành 'squash' => ESC để thoát => gõ ':wq' để lưu
+B4 : Màn  hình Terminal lại  đc hiển thị => Gõ 'i' để insert => Sửa lại commit đầu theo ý muốn => Xoá những commit khác bằng  dấu # hoặc xoá trực tiếp => ESC để thoát => gõ ':wq' để lưu
+B5 : Sử dụng git log --oneline để kiểm tra
+B6 : Git push -f để lưu lại trên remote
+
+Bài học rút ra ở bài 57 (Sửa message một commit đã push)
+B1 : Mở git log --oneline để kiểm tra mã hash mà mình cần đổi
+Ví dụ ta muốn sửa commit:  e6136ab them readme (cái cần sửa) => Ta phải lấy mã hash của cái trước nó : af763ff Hanlde Register Page ()
+B2 : Gõ: git rebase -i af763ff (tên mã trước của mã cần sửa)
+=> Nhiều mã commit đc hiện ra nhưng ta chỉ sửa dòng đầu tiên được hiện
+B3 : Gõ 'i' để chỉnh sửa => sửa 'pick' thành 'r' => gõ esc để thoát => gõ :wq để lưu
+=> Terminal lại đc hiện ra
+B4 : Gõ 'i' để chỉnh sửa => Sửa lại thành tên cômit mình muốn => => gõ esc để thoát => gõ :wq để lưu
+B5 : Gõ : git log --oneline để kiểm tra
+B6 : git push -f để lưu ở remote (trong trường hợp mà ta quên -u lênh nhánh mình  từ trước thì nó sẽ bị lỗi ta phải sửa lại thành  git push origin localBranch -u -f)
+
+Bài học rút ra ở bài 58 (Thêm thay đổi vào commit cuối cùng với amend)
+*Tình huống mình vừa push code của mình lên git nhưng  push xong mình lại thấy thiếu một vài cái nhỏ cần sửa thêm (Thay đổi nội dung của commit cuối cùng)
+B1 : Phải hoàn thành xong phần code mà bạn muốn thêm hoặc chỉnh sửa
+B2 : git log --oneline (lấy đoạn mã hash cuối cùng - không cần làm đoạn này cũng đc)
+B3 : git add .
+B4 : git commit --amend (lấy commit cuối cùng của chúng ta)
+B5 : Gõ 'i' để chỉnh sửa => Sửa lại thành tên cômit mình muốn => => gõ esc để thoát => gõ :wq để lưu
+B6 : git push -f
+B7 : Sử dụng git log --oneline (để kiểm tra mã hash cuối cùng của cái mới  có khác với mã hash cuối cùng của cái cũ không , khác => thành công)
+
+Bài học rút ra ở bài 59 (Git stash)
+Dùng khi muốn lưu lại các thay đổi chưa commit, rất hữu dụng khi đang làm dỡ branch hiện tại mà lại muốn chuyển sang branch khác.
+* Tình huống : Sau khi thay đổi đoạn code ở nhánh featureDev/Register thì ta phải sang nhánh featureDev/Login để sửa , do chưa hoàn thành nên ta vẫn chưa push đoạn code mới vừa làm ở nhánh featureDev/Register lên remote và nó báo lỗi nên phải dùng  git stash để lưu lại những cái thay đổi đó
+=> Sau khi git stash => lưu lại những cái thay đổi và làm các file đó trở lại trạng thái ban đầu => Nó sẽ đánh dấu một cái là vị trí mà các bạn stash tại cái commit nào (Trong trường hợp lúc này là Hoàn thành da704d5 Register Feature)
+=> Chúng ta có thể nhảy sang nhánh featureDev/Login bình thường
+=> Bây giờ ta quay lại nhánh featureDev/Register sau khi đã sửa xong ở featureDev/Login
+B1 : git checkout featureDev/Register 
+B2 : Kiểm tra ta đã stash ở những ccommit nào
+     + git stash list (stash@{0}: WIP on Register: 8373b84 Hoàn thành register page
+                       stash@{1}: WIP on Register: 812sd81 Tạo file a.md)
+     + git stash list -p (Để show chi tiết toàn bộ thay đổi)
+     + git stash show stash@{0} -p (Để xem chi tiết stash vị trí thứ 0)
+B3 : git stash apply stash@{0} (Lấy lại những đoạn code mà ta đã stash ở commit đó) => Nó sẽ apply lại những đoạn code như ban đầu
+B4 : git stash drop stash@{0} (Xoá stash 0) hoặc git stash clear (xoá toàn bộ tash luôn)
+B5 : git stash list (Kiểm tra stash đó đã bị xoá hay chưa)
+
+
+
+
+
+
+
+
+
+
+
+
