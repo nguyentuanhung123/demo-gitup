@@ -3,5 +3,5 @@ const handleClick = () => {
 }
 
 const handleSubmit = () => {
-    alert("Infomation user : ");
+    alert(123);
 }
