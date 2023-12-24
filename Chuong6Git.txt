@@ -119,6 +119,7 @@ B1 : git checkout featureDev/Register
 B2 : Kiểm tra ta đã stash ở những ccommit nào
      + git stash list (stash@{0}: WIP on Register: 8373b84 Hoàn thành register page
                        stash@{1}: WIP on Register: 812sd81 Tạo file a.md)
+     (0 là cái stash mới nhất mà mình vừa tạo)
      + git stash list -p (Để show chi tiết toàn bộ thay đổi)
      + git stash show stash@{0} -p (Để xem chi tiết stash vị trí thứ 0)
 B3 : git stash apply stash@{0} (Lấy lại những đoạn code mà ta đã stash ở commit đó) => Nó sẽ apply lại những đoạn code như ban đầu
